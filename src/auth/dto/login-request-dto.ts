@@ -1,5 +1,4 @@
-import { IsNotEmpty, MinLength } from "class-validator";
-import { IsEmail } from "class-validator/types/decorator/string/IsEmail.js";
+import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
 
 export class LoginRequestDto {
     @IsNotEmpty({ message: "Email harus diisi" })
