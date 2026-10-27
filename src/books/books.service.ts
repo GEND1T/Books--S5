@@ -1,78 +1,80 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { BookEntity } from './entities/book-entity.js';
 import { CreateBookDto } from './dto/create-book-dto.js';
 
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+
 @Injectable()
 export class BooksService {
+    constructor(
+        @InjectRepository(BookEntity)
+        private readonly bookRepository: Repository<BookEntity>
+    ){}
 
-    // contoh data dari database
-    private books: BookEntity[] = [
-        {
-            id: 1,
-            name: 'The Great Gatsby',  
-            author: 'F. Scott Fitzgerald',
-            isbn: '978-0-7432-7356-5',
-            publishedYear: 1925,
-            isAvailable: true
-        },
-        {
-            id: 2,
-            name: 'To Kill a Mockingbird',
-            author: 'Harper Lee',
-            isbn: '978-0-06-112008-4',
-            publishedYear: 1960,
-            isAvailable: true
-        }
-    ];
-
-    //method untuk mendapatkan semua buku
-    findAll(): BookEntity[] {
-        return this.books;
+    // Method untuk mendapatkan semua buku
+    async findAll(): Promise<BookEntity[]> {
+        return await this.bookRepository.find({
+            order: { createdAt: 'DESC' },
+        });
     }
 
-    findById(id: number): BookEntity | undefined {
-        return this.books.find(book => book.id === id);
-    }   
+    // Alias untuk findall
+    async findall(): Promise<BookEntity[]> {
+        return this.findAll();
+    }
 
+    // Method untuk mendapatkan satu buku berdasarkan ID
+    async findOne(id: string): Promise<BookEntity> {
+        const book = await this.bookRepository.findOneBy({ id });
+        if (!book) {
+            throw new NotFoundException(`Buku dengan ID ${id} tidak ditemukan`);
+        }
+        return book;
+    }
 
-    createBook(book: CreateBookDto): BookEntity {
-        // logic untuk membuat buku baru dengan ID unik
-        const maxId = this.books.length > 0 ? Math.max(...this.books.map(b => b.id)) : 0;
-        const newBook: BookEntity = {
-            id: maxId + 1,
-            name: book.name,
-            author: book.author,
-            isbn: book.isbn,
-            publishedYear: book.publishedYear,
-            isAvailable: true
+    // Alias untuk findById
+    async findById(id: string | number): Promise<BookEntity> {
+        return this.findOne(String(id));
+    }
+
+    // Method untuk menambahkan buku baru
+    async create(book: CreateBookDto): Promise<BookEntity> {
+        const newBook = this.bookRepository.create(book);
+        return await this.bookRepository.save(newBook);
+    }
+
+    // Alias untuk createBook
+    async createBook(book: CreateBookDto): Promise<BookEntity> {
+        return this.create(book);
+    }
+
+    // Method untuk memperbarui data buku
+    async update(id: string, updateBookDto: Partial<CreateBookDto>): Promise<BookEntity> {
+        const book = await this.findOne(id);
+        const updatedBook = this.bookRepository.merge(book, updateBookDto);
+        return await this.bookRepository.save(updatedBook);
+    }
+
+    // Alias untuk updateBook
+    async updateBook(id: string | number, updatedBook: Partial<CreateBookDto>): Promise<BookEntity> {
+        return this.update(String(id), updatedBook);
+    }
+
+    // Method untuk menghapus buku (soft delete)
+    async delete(id: string): Promise<{ message: string; deletedId: string }> {
+        await this.findOne(id);
+        await this.bookRepository.softDelete(id);
+
+        return {
+            message: 'Buku berhasil dihapus',
+            deletedId: id,
         };
-
-        this.books.push(newBook);
-        return newBook;
     }
 
-    updateBook(id: number, updatedBook: Partial<BookEntity>): BookEntity | undefined {
-        const bookIndex = this.books.findIndex(book => book.id === id);
-        if (bookIndex === -1) {
-            return undefined; // Buku tidak ditemukan
-        }
-
-        const existingBook = this.books[bookIndex];
-        const updatedBookEntity: BookEntity = {
-            ...existingBook,
-            ...updatedBook
-        };
-
-        this.books[bookIndex] = updatedBookEntity;
-        return updatedBookEntity;
-    }
-
-    deleteBook(id: number): boolean {
-        const bookIndex = this.books.findIndex(book => book.id === id);
-        if (bookIndex !== -1) {
-            this.books.splice(bookIndex, 1);
-            return true; // Buku berhasil dihapus
-        }
-        return false; // Buku tidak ditemukan
+    // Alias untuk deleteBook
+    async deleteBook(id: string | number): Promise<{ message: string; deletedId: string }> {
+        return this.delete(String(id));
     }
 }
