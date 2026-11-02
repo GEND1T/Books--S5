@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
 import { CategoriesModule } from './categories/categories.module.js';
 import { CustomersModule } from './customers/customers.module.js';
+import { CustomerAddressesModule } from './customer-addresses/customer-addresses.module.js';
 import Joi from 'joi';
 
 @Module({
@@ -48,6 +49,7 @@ import Joi from 'joi';
     UsersModule,
     CategoriesModule,
     CustomersModule,
+    CustomerAddressesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
