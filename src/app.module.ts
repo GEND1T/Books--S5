@@ -10,6 +10,7 @@ import { CategoriesModule } from './categories/categories.module.js';
 import { CustomersModule } from './customers/customers.module.js';
 import { CustomerAddressesModule } from './customer-addresses/customer-addresses.module.js';
 import { PublishersModule } from './publishers/publishers.module.js';
+import { AuthorsModule } from './authors/authors.module.js';
 import Joi from 'joi';
 
 @Module({
@@ -52,6 +53,7 @@ import Joi from 'joi';
     CustomersModule,
     CustomerAddressesModule,
     PublishersModule,
+    AuthorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

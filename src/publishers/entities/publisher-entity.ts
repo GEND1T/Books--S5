@@ -5,7 +5,7 @@ export class PublisherEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({type:'varchar', length:64})
+    @Column({type:'varchar', length:150})
     name: string;
 
     @CreateDateColumn({name:'created_at'})
