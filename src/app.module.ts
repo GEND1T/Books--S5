@@ -7,6 +7,7 @@ import { BooksModule } from './books/books.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
 import { CategoriesModule } from './categories/categories.module.js';
+import { CustomersModule } from './customers/customers.module.js';
 import Joi from 'joi';
 
 @Module({
@@ -46,6 +47,7 @@ import Joi from 'joi';
     AuthModule,
     UsersModule,
     CategoriesModule,
+    CustomersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
