@@ -11,6 +11,7 @@ import { CustomersModule } from './customers/customers.module.js';
 import { CustomerAddressesModule } from './customer-addresses/customer-addresses.module.js';
 import { PublishersModule } from './publishers/publishers.module.js';
 import { AuthorsModule } from './authors/authors.module.js';
+import { BookAuthorsModule } from './book_authors/book_authors.module.js';
 import Joi from 'joi';
 
 @Module({
@@ -54,6 +55,7 @@ import Joi from 'joi';
     CustomerAddressesModule,
     PublishersModule,
     AuthorsModule,
+    BookAuthorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
