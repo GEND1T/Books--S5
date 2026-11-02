@@ -6,6 +6,7 @@ import { AppService } from './app.service.js';
 import { BooksModule } from './books/books.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
+import { CategoriesModule } from './categories/categories.module.js';
 import Joi from 'joi';
 
 @Module({
@@ -44,6 +45,7 @@ import Joi from 'joi';
     BooksModule,
     AuthModule,
     UsersModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
