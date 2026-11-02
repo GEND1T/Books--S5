@@ -14,6 +14,7 @@ import { AuthorsModule } from './authors/authors.module.js';
 import { BookAuthorsModule } from './book_authors/book_authors.module.js';
 import { OrdersModule } from './orders/orders.module.js';
 import { OrderItemsModule } from './order_items/order_items.module.js';
+import { PaymentsModule } from './payments/payments.module.js';
 import Joi from 'joi';
 
 @Module({
@@ -60,6 +61,7 @@ import Joi from 'joi';
     BookAuthorsModule,
     OrdersModule,
     OrderItemsModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
