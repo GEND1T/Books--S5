@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { AddressEntity } from "../../customer-addresses/entities/customer-address-entity.js";
+import { OrderEntity } from "../../orders/entities/orders-entity.js";
 
 @Entity('customers')
 export class CustomerEntity {
@@ -16,7 +17,10 @@ export class CustomerEntity {
     phone: string;
 
     @OneToMany(() => AddressEntity, (item) => item.customer, {cascade: true})
-    items: AddressEntity[];
+    addresses: AddressEntity[];
+
+    @OneToMany(() => OrderEntity, (item) => item.customer, {cascade: true})
+    orders: OrderEntity[];
 
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;

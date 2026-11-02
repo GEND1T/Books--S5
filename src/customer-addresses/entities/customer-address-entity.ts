@@ -21,10 +21,8 @@ export class AddressEntity {
     @Column({type:'varchar', length:10})
     postal_code: string;
 
+    @ManyToOne(() => CustomerEntity, (customer) => customer.addresses, {onDelete: 'CASCADE'})
     @JoinColumn({name:'customer_id'})
-    customer_id: string;
-
-    @ManyToOne(() => CustomerEntity, (item) => item.items)
     customer: CustomerEntity;
 
     @CreateDateColumn({name:'created_at'})

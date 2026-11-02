@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { CustomerEntity } from "../../customers/entities/customer-entity.js";
 
 @Entity('orders')
 export class OrderEntity {
@@ -13,7 +14,11 @@ export class OrderEntity {
 
     @Column({type:'decimal', precision:12, scale:2})
     total_amount: number;
-
+    
+    @ManyToOne(() => CustomerEntity, (customer) => customer.orders, {onDelete: 'CASCADE'})
+    @JoinColumn({name:'customer_id'})
+    customer: CustomerEntity;
+    
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;
 
