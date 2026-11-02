@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { CustomerEntity } from "../../customers/entities/customer-entity.js";
 
 @Entity('addresses')
 export class AddressEntity {
@@ -19,6 +20,12 @@ export class AddressEntity {
 
     @Column({type:'varchar', length:10})
     postal_code: string;
+
+    @JoinColumn({name:'customer_id'})
+    customer_id: string;
+
+    @ManyToOne(() => CustomerEntity, (item) => item.items)
+    customer: CustomerEntity;
 
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;

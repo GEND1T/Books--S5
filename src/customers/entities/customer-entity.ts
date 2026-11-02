@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AddressEntity } from "../../customer-addresses/entities/customer-address-entity.js";
 
 @Entity('customers')
 export class CustomerEntity {
@@ -13,6 +14,9 @@ export class CustomerEntity {
 
     @Column({type:'varchar', length:20})
     phone: string;
+
+    @OneToMany(() => AddressEntity, (item) => item.customer, {cascade: true})
+    items: AddressEntity[];
 
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;
