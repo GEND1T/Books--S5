@@ -13,6 +13,7 @@ import { PublishersModule } from './publishers/publishers.module.js';
 import { AuthorsModule } from './authors/authors.module.js';
 import { BookAuthorsModule } from './book_authors/book_authors.module.js';
 import { OrdersModule } from './orders/orders.module.js';
+import { OrderItemsModule } from './order_items/order_items.module.js';
 import Joi from 'joi';
 
 @Module({
@@ -58,6 +59,7 @@ import Joi from 'joi';
     AuthorsModule,
     BookAuthorsModule,
     OrdersModule,
+    OrderItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
