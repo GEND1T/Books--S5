@@ -10,4 +10,9 @@ export class CreateBookDto {
     @IsNotEmpty({ message: "Tahun terbit harus diisi" })
     @IsInt({ message: "Tahun terbit harus berupa angka" })
     readonly publishedYear: number;
+
+    @IsNotEmpty({ message: "Silakan pilih kategori terlebih dahulu" })
+    readonly categories: string[];
+    @IsNotEmpty({ message: "Silakan pilih penerbit terlebih dahulu" })
+    readonly publisher: string;
 }
