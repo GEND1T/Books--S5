@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { CategoryEntity } from "../../categories/entities/category-entity.js";
 
 @Entity('books')
 export class BookEntity {
@@ -19,6 +20,10 @@ export class BookEntity {
 
     @Column({type:'boolean', default:true})
     isAvailable: boolean;
+
+    @ManyToOne(() => CategoryEntity, (category) => category.books)
+    @JoinColumn({name:'category_id'})
+    category: CategoryEntity;
 
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;

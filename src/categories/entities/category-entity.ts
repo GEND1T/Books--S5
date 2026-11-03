@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BookEntity } from "../../books/entities/book-entity.js";
 
 @Entity('categories')
 export class CategoryEntity {
@@ -8,6 +9,9 @@ export class CategoryEntity {
     @Column({type:'varchar', length:64})
     name: string;
 
+    @OneToMany(() => BookEntity, (book) => book.category)
+    books: BookEntity[];
+    
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;
 
