@@ -1,10 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { OrderEntity } from "../../orders/entities/orders-entity.js";
 
 @Entity('payments')
 export class PaymentsEntity {
     
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
+    @OneToOne(() => OrderEntity, (order) => order.payments, {onDelete: 'CASCADE'})
+    @JoinColumn({name:'order_id'})
+    order: OrderEntity;
 
     @Column({type:'varchar', length:50})
     payment_method: string;
