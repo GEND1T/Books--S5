@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { CustomerEntity } from "../../customers/entities/customer-entity.js";
+import { OrderItemsEntity } from "../../order_items/entities/order_items-entity.js";
 
 @Entity('orders')
 export class OrderEntity {
@@ -18,6 +19,9 @@ export class OrderEntity {
     @ManyToOne(() => CustomerEntity, (customer) => customer.orders, {onDelete: 'CASCADE'})
     @JoinColumn({name:'customer_id'})
     customer: CustomerEntity;
+
+    @OneToMany(() => OrderItemsEntity, (item) => item.order, {cascade: true})
+    orderItems: OrderItemsEntity[];
     
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;
