@@ -2,8 +2,10 @@ import { IsNotEmpty } from "class-validator";
 
 export class CreateBookAuthorsDto {
     @IsNotEmpty({ message: "Silakan pilih buku terlebih dahulu" })
-    readonly bookId: string;
+    readonly book_id: string;
 
     @IsNotEmpty({ message: "Silakan pilih penulis terlebih dahulu" })
-    readonly authorId: string;
+    readonly author_id: string;
+
+
 }
