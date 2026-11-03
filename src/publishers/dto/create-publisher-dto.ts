@@ -4,4 +4,7 @@ export class CreatePublisherDto {
     @IsNotEmpty({ message: "Nama Penerbit harus diisi" })
     @IsString({ message: "Nama Penerbit harus berupa huruf" })
     readonly name: string;
+
+    @IsNotEmpty({ message: "Silakan pilih buku terlebih dahulu" })
+    readonly books: string[];
 }

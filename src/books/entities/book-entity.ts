@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { CategoryEntity } from "../../categories/entities/category-entity.js";
+import { PublisherEntity } from "../../publishers/entities/publisher-entity.js";
 
 @Entity('books')
 export class BookEntity {
@@ -24,6 +25,10 @@ export class BookEntity {
     @ManyToOne(() => CategoryEntity, (category) => category.books)
     @JoinColumn({name:'category_id'})
     category: CategoryEntity;
+
+    @ManyToOne(() => PublisherEntity, (publisher) => publisher.books)
+    @JoinColumn({name:'publisher_id'})
+    publisher: PublisherEntity;
 
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;
