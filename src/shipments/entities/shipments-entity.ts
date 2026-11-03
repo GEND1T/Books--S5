@@ -1,10 +1,18 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { OrderEntity } from "../../orders/entities/orders-entity.js";
 
 @Entity('shipments')
 export class ShipmentsEntity {
 
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
+    @OneToOne(() => OrderEntity, (order) => order.shipment, {onDelete: 'CASCADE'})
+    @JoinColumn({name:'order_id'})
+    order: OrderEntity;
+
+    @Column({type:'uuid'})
+    order_id: string;
 
     @Column({type:'varchar', length:100})
     courier: string;

@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, One
 import { CustomerEntity } from "../../customers/entities/customer-entity.js";
 import { OrderItemsEntity } from "../../order_items/entities/order_items-entity.js";
 import { PaymentsEntity } from "../../payments/entities/payments-entity.js";
+import { ShipmentsEntity } from "../../shipments/entities/shipments-entity.js";
 
 @Entity('orders')
 export class OrderEntity {
@@ -27,6 +28,10 @@ export class OrderEntity {
     @OneToOne(() => PaymentsEntity, (payment) => payment.order, {cascade: true})
     @JoinColumn({name:'payment_id'})
     payments: PaymentsEntity;
+
+    @OneToOne(() => ShipmentsEntity, (shipment) => shipment.order, {cascade: true})
+    @JoinColumn({name:'shipment_id'})
+    shipment: ShipmentsEntity;
 
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;
