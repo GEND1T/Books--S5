@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { OrderEntity } from "../../orders/entities/orders-entity.js";
 
 @Entity('order_items')
 export class OrderItemsEntity {
@@ -11,8 +12,15 @@ export class OrderItemsEntity {
     
     @Column({type:'decimal', precision: 12, scale: 2})
     price: number;
-    
+
+    @ManyToOne(() => OrderEntity, (order) => order.orderItems, {onDelete: 'CASCADE'})
+    @JoinColumn({name:'order_id'})
+    order: OrderEntity;
+
+    @Column({type:'uuid'})
+    order_id: String;
+
     @Column({type:'decimal', precision: 12, scale: 2})
     subtotal: number;
-    
+
 }
