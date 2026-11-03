@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToO
 import { CategoryEntity } from "../../categories/entities/category-entity.js";
 import { PublisherEntity } from "../../publishers/entities/publisher-entity.js";
 import { BookAuthorsEntity } from "../../book_authors/entities/book_authors-entity.js";
+import { OrderItemsEntity } from "../../order_items/entities/order_items-entity.js";
 
 @Entity('books')
 export class BookEntity {
@@ -33,6 +34,9 @@ export class BookEntity {
 
     @OneToMany(() => BookAuthorsEntity, (bookAuthor) => bookAuthor.book)
     bookAuthors: BookAuthorsEntity[];
+
+    @OneToMany(() => OrderItemsEntity, (orderItem) => orderItem.book)
+    orderItems: OrderItemsEntity[];
 
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;
