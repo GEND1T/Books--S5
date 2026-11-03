@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { CustomerEntity } from "../../customers/entities/customer-entity.js";
 import { OrderItemsEntity } from "../../order_items/entities/order_items-entity.js";
+import { PaymentsEntity } from "../../payments/entities/payments-entity.js";
 
 @Entity('orders')
 export class OrderEntity {
@@ -22,7 +23,11 @@ export class OrderEntity {
 
     @OneToMany(() => OrderItemsEntity, (item) => item.order, {cascade: true})
     orderItems: OrderItemsEntity[];
-    
+
+    @OneToOne(() => PaymentsEntity, (payment) => payment.order, {cascade: true})
+    @JoinColumn({name:'payment_id'})
+    payments: PaymentsEntity;
+
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;
 
