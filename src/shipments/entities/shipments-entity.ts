@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, type Relation } from "typeorm";
 import { OrderEntity } from "../../orders/entities/orders-entity.js";
 
 @Entity('shipments')
@@ -9,7 +9,7 @@ export class ShipmentsEntity {
 
     @OneToOne(() => OrderEntity, (order) => order.shipment, {onDelete: 'CASCADE'})
     @JoinColumn({name:'order_id'})
-    order: OrderEntity;
+    order: Relation<OrderEntity>;
 
     @Column({type:'uuid'})
     order_id: string;
@@ -23,9 +23,9 @@ export class ShipmentsEntity {
     @Column({type:'varchar', length:30})
     status: string;
 
-    @Column({type:'datetime', nullable:true})
+    @Column({type:'timestamp', nullable:true})
     shipped_at: Date;
 
-    @Column({type:'datetime', nullable:true})
+    @Column({type:'timestamp', nullable:true})
     delivered_at: Date;
 }

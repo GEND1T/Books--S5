@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, type Relation } from "typeorm";
 import { OrderEntity } from "../../orders/entities/orders-entity.js";
 
 @Entity('payments')
@@ -9,7 +9,7 @@ export class PaymentsEntity {
 
     @OneToOne(() => OrderEntity, (order) => order.payments, {onDelete: 'CASCADE'})
     @JoinColumn({name:'order_id'})
-    order: OrderEntity;
+    order: Relation<OrderEntity>;
 
     @Column({type:'varchar', length:50})
     payment_method: string;

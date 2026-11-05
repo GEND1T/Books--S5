@@ -14,8 +14,10 @@ export class CreateBookDto {
 
     @IsNotEmpty({ message: "Silakan pilih kategori terlebih dahulu" })
     readonly categories: string[];
+    
     @IsNotEmpty({ message: "Silakan pilih penerbit terlebih dahulu" })
-    readonly publisher: string;
+    readonly publisherId: string;
+    
     @IsNotEmpty({ message: "Silakan pilih penulis terlebih dahulu" })
     readonly bookAuthors: CreateBookAuthorsDto[];
 }

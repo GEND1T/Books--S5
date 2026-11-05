@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, type Relation } from "typeorm";
 import { OrderEntity } from "../../orders/entities/orders-entity.js";
 import { BookEntity } from "../../books/entities/book-entity.js";
 
@@ -16,11 +16,11 @@ export class OrderItemsEntity {
 
     @ManyToOne(() => OrderEntity, (order) => order.orderItems, {onDelete: 'CASCADE'})
     @JoinColumn({name:'order_id'})
-    order: OrderEntity;
+    order: Relation<OrderEntity>;
 
     @ManyToOne(() => BookEntity, (book) => book.orderItems, {onDelete: 'CASCADE'})
     @JoinColumn({name:'book_id'})
-    book: BookEntity;
+    book: Relation<BookEntity>;
 
     @Column({type:'uuid'})
     book_id: String;
