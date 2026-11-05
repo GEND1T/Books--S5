@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn, type Relation, UpdateDateColumn } from "typeorm";
 import { CustomerEntity } from "../../customers/entities/customer-entity.js";
 import { OrderItemsEntity } from "../../order_items/entities/order_items-entity.js";
 import { PaymentsEntity } from "../../payments/entities/payments-entity.js";
@@ -20,18 +20,18 @@ export class OrderEntity {
     
     @ManyToOne(() => CustomerEntity, (customer) => customer.orders, {onDelete: 'CASCADE'})
     @JoinColumn({name:'customer_id'})
-    customer: CustomerEntity;
+    customer: Relation<CustomerEntity>;
 
     @OneToMany(() => OrderItemsEntity, (item) => item.order, {cascade: true})
     orderItems: OrderItemsEntity[];
 
     @OneToOne(() => PaymentsEntity, (payment) => payment.order, {cascade: true})
     @JoinColumn({name:'payment_id'})
-    payments: PaymentsEntity;
+    payments: Relation<PaymentsEntity>;
 
     @OneToOne(() => ShipmentsEntity, (shipment) => shipment.order, {cascade: true})
     @JoinColumn({name:'shipment_id'})
-    shipment: ShipmentsEntity;
+    shipment: Relation<ShipmentsEntity>;
 
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;

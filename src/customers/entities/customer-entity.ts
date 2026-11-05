@@ -5,29 +5,31 @@ import { OrderEntity } from "../../orders/entities/orders-entity.js";
 @Entity('customers')
 export class CustomerEntity {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+        id: string;
 
     @Column({type:'varchar', length:150})
-    name: string;
+        name: string;
 
     @Column({type:'varchar', length:150, unique:true})
-    email: string;
+        email: string;
 
     @Column({type:'varchar', length:20})
-    phone: string;
+        phone: string;
 
+    // OneToMany relationship with AddressEntity
     @OneToMany(() => AddressEntity, (item) => item.customer, {cascade: true})
-    addresses: AddressEntity[];
+        addresses: AddressEntity[];
 
+    // OneToMany relationship with OrderEntity
     @OneToMany(() => OrderEntity, (item) => item.customer, {cascade: true})
-    orders: OrderEntity[];
+        orders: OrderEntity[];
 
     @CreateDateColumn({name:'created_at'})
-    createdAt: Date;
+        createdAt: Date;
 
     @UpdateDateColumn({name:'update_at'})
-    updateAt: Date;
+        updateAt: Date;
 
     @DeleteDateColumn({name:'deleted_at', nullable:true})
-    deletedAt: Date
+        deletedAt: Date
 }
